@@ -12,6 +12,13 @@ const UBER_Tracking_Map="https://api.uber.com/V1.2/requests/{request_id}/map";
 const UBER_Get_Reciept="https://api.uber.com/V1.2/requests/{request_id}/receipts";
 let accessToken = "";
 let requests = "";
+let requestsApiResponse=[];
+let estimateApiResponse=[];
+
+//Google Geocoding
+const googleURL = "https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=${api_key}";
+const api_key ="AIzaSyAexKQVBMP39SiZYE9pq_hvNvnUKYG-jMU";
+
 
 
 //Grab parameter for code, variable code will store the code needed for accessToken
@@ -40,6 +47,8 @@ function tradeForAccessToken(code) {
          accessToken = response.access_token;
          requestsApi(accessToken);
          rideEstimateApi(accessToken);
+
+
           // run function needed access to desired endpoint
        },
        error: function(error) { //Error
@@ -68,7 +77,7 @@ function requestsApi(accessToken) {
 }
 
 function rideEstimateApi(accessToken) {
-  const url= "https://api.uber.com/v1.2/requests/estimate?start_latitude=37.7752278&start_longitude=-122.4197513&end_latitude=37.7773228&end_longitude=-122.4272052&authorization=Bearer${accessToken}";
+  const url= `https://api.uber.com/v1.2/requests/estimate`;
   $.ajax({
     url,
     method: "POST",
@@ -78,9 +87,16 @@ function rideEstimateApi(accessToken) {
        "Accept-Language": "en_US",
        "Content-Type": "application/json"
        },
+   data: JSON.stringify({
+      "start_latitude": 37.7752278,
+      "start_longitude": -122.4197513,
+      "end_latitude": 37.7773228,
+      "end_longitude": -122.4272052
+    }),
 
     success: function(response) {
          console.log(response);
+
           },
     error: function(error) {
          console.log(error);
@@ -89,9 +105,40 @@ function rideEstimateApi(accessToken) {
   })
 }
 
+function getGeocode() {
+  $(".jsZipSearch").on("submit", function(event) {
+    event.preventDefault();
+    let userInput= $(".js-search").val();
+    console.log(userInput);
+    rideEstimateApi(accessToken);
+
+    function geocode(){
+      $.ajax({
+        googleURL,
+        method: "GET",
+        address: $(userinput),
+        key: api_key,
+
+        success: function(response) {
+             console.log(response);
+              },
+        error: function(error) {
+             console.log(error);
+           }
 
 
+    })
+    getGeocode();
+   }
 
+
+});
+}
+
+
+// function displayResults(zipcode) {
+//   data.
+// }
 //        const query = new XMLHttpRequest();
 //    xhr.open('GET', UBER_URL);
 //    xhr.setRequestHeader(UBER_CLIENT_KEY, UBER_SERVER_TOKEN);
