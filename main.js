@@ -1,4 +1,5 @@
 
+
 const UBER_SERVER_TOKEN = "SV-Rt3mhdPpAmXnf-cvZKLJmzmzxsPObY9MU2FUi";
 const clientID = "6RKJrLdnQfwsdkLRWzkJDVDuFy1RERuy";
 const clientSecret= "751iZ4YDzNltjEPsZ8a4f7kXS9RLf8pVkgCyV_GE";
@@ -14,6 +15,11 @@ let accessToken = "";
 let requests = "";
 let requestsApiResponse=[];
 let estimateApiResponse=[];
+let latitudeStart = "";
+let longitudeStart = "";
+let latitudeEnd = "";
+let longitudeEnd = "";
+
 
 //Google Geocoding
 const googleURL = "https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=${api_key}";
@@ -34,7 +40,7 @@ getUrlParameter("code");
 
 // trading code for Access token
 function tradeForAccessToken(code) {
-  const url=`https://login.uber.com/oauth/v2/token?code=${code}&client_id=${clientID}&client_secret=${clientSecret}&grant_type=authorization_code&redirect_uri=${redirectURI}`
+  const url=`http://crossorigin.me/https://login.uber.com/oauth/v2/token?code=${code}&client_id=${clientID}&client_secret=${clientSecret}&grant_type=authorization_code&redirect_uri=${redirectURI}`
     $.ajax({
        url,
        method: "POST",// method post because 405 error not wanting to see GET request as method.
@@ -44,9 +50,10 @@ function tradeForAccessToken(code) {
          "Access-Control-Allow-Headers": "Content-Type, Accept" ,
        },
        success: function(response) {// Success
+         console.log(response);
          accessToken = response.access_token;
          requestsApi(accessToken);
-         rideEstimateApi(accessToken);
+
 
 
           // run function needed access to desired endpoint
@@ -76,7 +83,7 @@ function requestsApi(accessToken) {
   })
 }
 
-function rideEstimateApi(accessToken) {
+function getEstimateFromUber(accessToken, latitude, longitude) {
   const url= `https://api.uber.com/v1.2/requests/estimate`;
   $.ajax({
     url,
@@ -88,10 +95,10 @@ function rideEstimateApi(accessToken) {
        "Content-Type": "application/json"
        },
    data: JSON.stringify({
-      "start_latitude": 37.7752278,
-      "start_longitude": -122.4197513,
-      "end_latitude": 37.7773228,
-      "end_longitude": -122.4272052
+      "start_latitude": latitude,
+      "start_longitude": longitude,
+      "end_latitude": latitudeEnd,
+      "end_longitude": longitudeEnd,
     }),
 
     success: function(response) {
@@ -105,36 +112,125 @@ function rideEstimateApi(accessToken) {
   })
 }
 
+
+
 function getGeocode() {
   $(".jsZipSearch").on("submit", function(event) {
     event.preventDefault();
-    let userInput= $(".js-search").val();
-    console.log(userInput);
-    rideEstimateApi(accessToken);
+    let startingDestination= $(".startAddInput").val();
+    let endDestination= $(".endAddInput").val();
+    covertStartingAddressToLongLat(startingDestination);
+    covertEndAddressToLongLat(endDestination);
 
-    function geocode(){
+  })
+
+}
+getGeocode();
+
+
+function covertStartingAddressToLongLat(address){
+  const googleURL = `https://maps.googleapis.com/maps/api/geocode/json?address=${address}`;
       $.ajax({
-        googleURL,
-        method: "GET",
-        address: $(userinput),
-        key: api_key,
+        url: googleURL,
+        type: "POST",
 
         success: function(response) {
              console.log(response);
-              },
+             locationLat = response.results[0].geometry.location.lat;
+             locationLong = response.results[0].geometry.location.lng;
+             getEstimateFromUber(accessToken, locationLat, locationLong);
+        },
+
         error: function(error) {
              console.log(error);
-           }
-
-
-    })
-    getGeocode();
-   }
-
-
-});
+              }
+      })
 }
 
+function covertEndAddressToLongLat(address){
+  const googleURL = `https://maps.googleapis.com/maps/api/geocode/json?address=${address}`;
+      $.ajax({
+        url: googleURL,
+        type: "POST",
+
+        success: function(response) {
+             console.log(response);
+             latitudeEnd = response.results[0].geometry.location.lat;
+             longitudeEnd = response.results[0].geometry.location.lng;
+        },
+
+        error: function(error) {
+             console.log(error);
+              }
+      })
+}
+
+
+
+
+
+$( document ).ready(function() {
+
+    scaleVideoContainer();
+
+    initBannerVideoSize('.video-container .poster img');
+    initBannerVideoSize('.video-container .filter');
+    initBannerVideoSize('.video-container video');
+
+    $(window).on('resize', function() {
+        scaleVideoContainer();
+        scaleBannerVideoSize('.video-container .poster img');
+        scaleBannerVideoSize('.video-container .filter');
+        scaleBannerVideoSize('.video-container video');
+    });
+
+});
+
+function scaleVideoContainer() {
+
+    var height = $(window).height() + 5;
+    var unitHeight = parseInt(height) + 'px';
+    $('.homepage-hero-module').css('height',unitHeight);
+
+}
+
+function initBannerVideoSize(element){
+
+    $(element).each(function(){
+        $(this).data('height', $(this).height());
+        $(this).data('width', $(this).width());
+    });
+
+    scaleBannerVideoSize(element);
+
+}
+
+function scaleBannerVideoSize(element){
+
+    var windowWidth = $(window).width(),
+    windowHeight = $(window).height() + 5,
+    videoWidth,
+    videoHeight;
+
+    // console.log(windowHeight);
+
+    $(element).each(function(){
+        var videoAspectRatio = $(this).data('height')/$(this).data('width');
+
+        $(this).width(windowWidth);
+
+        if(windowWidth < 1000){
+            videoHeight = windowHeight;
+            videoWidth = videoHeight / videoAspectRatio;
+            $(this).css({'margin-top' : 0, 'margin-left' : -(videoWidth - windowWidth) / 2 + 'px'});
+
+            $(this).width(videoWidth).height(videoHeight);
+        }
+
+        $('.homepage-hero-module .video-container video').addClass('fadeIn animated');
+
+    });
+}
 
 // function displayResults(zipcode) {
 //   data.

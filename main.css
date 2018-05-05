@@ -1,81 +1,86 @@
-
-.header {
-    grid-area: header;
-    width: 100%;
-    text-align: center;
-    color: white;
-}
-
-.images {
-    grid-area: main;
-    width: 100%;
-    height: 350px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    white-space:inherit;
-    border-bottom: 2px white solid;
-}
-
-
-.content {
-    color: white;
-    grid-area: bar;
-    width: 100%;
-    height: auto;
-    font-size: 40px;
-    text-align: center;
-    margin-top: 30px;
-
+.signOntoUber {
+  margin-bottom: 300px;
+  font-size: 48px;
 
 }
-
-.footer {
-    grid-area: footer;
-    text-align: center;
-    height: 350px;
-    width: 100%;
-}
-
-.grid-container {
-    display: grid;
-    grid-template-columns: auto auto auto;
-    grid-template-rows: auto;
-    grid-template-areas:
-        "header header header"
-        "main main main"
-        "bar bar bar"
-        "footer footer footer";
-    padding: 10px;
-    background-color: white;
-}
-
-.circleImages {
-    border-radius: 50%;
-    display: inline-block;
-    width: 150px;
-    height: 150px;
+#button {
+    width: 6em;
+    border: 5px solid white;
+    background: #ffe;
+    border-radius: 5px;
     margin: 0 auto;
-    padding-left: 75px;
-    padding-right: 75px;
+}
+a {
+    display: block;
+    width: 100%;
+    line-height: 2em;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5px;
+}
+a:hover {
+    color: black;
+    background: white;
+}
 
+/* video */
 
+.homepage-hero-module {
+    border-right: none;
+    border-left: none;
+    position: relative;
+}
+.no-video .video-container video,
+.touch .video-container video {
+    display: none;
+}
+.no-video .video-container .poster,
+.touch .video-container .poster {
+    display: block !important;
+}
+.video-container {
+    position: relative;
+    bottom: 0%;
+    left: 0%;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    background: #000;
+}
+.video-container .poster img {
+    width: 100%;
+    bottom: 0;
+    position: absolute;
+}
+.video-container .filter {
+    z-index: 100;
+    position: absolute;
+    background: rgba(0, 0, 0, 0.4);
+    width: 100%;
+}
+.video-container video {
+    position: absolute;
+    z-index: 0;
+    bottom: 0;
+}
+.video-container video.fillWidth {
+    width: 100%;
+}
+
+.text-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index:1;
+    color: white;
+    font-size: 2em;
+    text-align: center;
+    width: 100%;
 }
 
 
 
-/*.grid-item  {
-
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    text-align: center;
-    font-size: 30px;
-    color: white;
-    border: 1px solid grey;
-    padding: 20px;
-    max-height: 300px;
-
-
+/* font style */
+.abril {
+font-family: 'Abril Fatface', cursive;
 }

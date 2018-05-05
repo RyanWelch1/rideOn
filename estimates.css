@@ -1,0 +1,42 @@
+.tripInput {
+
+  max-width: 100%;
+  font-size: 3em;
+  padding-bottom: 20px;
+  padding-top: 10px;
+  border-bottom: 3px solid black;
+}
+.jsZipSearch {
+  text-align: center;
+
+}
+.startAddInput {
+  font-size: .5em;
+  display: block;
+  margin: 0 auto;
+  margin-top: 10px;
+  text-align: center;
+   border-radius: 10px;
+}
+
+
+.endAddInput {
+  font-size: .5em;
+  display: block;
+  margin: 0 auto;
+  margin-top: 10px;
+  text-align: center;
+  border-radius: 10px;
+
+}
+
+
+#submitTrip {
+  font-size: .5em;
+  border-radius: 10px;
+}
+.tripInput {
+
+  width: 100%;
+  margin: 0 auto;
+}

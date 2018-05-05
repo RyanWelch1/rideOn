@@ -5,54 +5,49 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RideON</title>
     <link rel="stylesheet" href="main.css">
+    <link href="https://fonts.googleapis.com/css?family=Abril+Fatface" rel="stylesheet">
 </head>
 <body>
+
   <main>
 
+    <div class="homepage-hero-module">
+        <div class="video-container">
+            <div class="filter"></div>
+              <video autoplay loop class="fillWidth">
+                  <source src="Crossroad.MP4" type="video/mp4" />Your browser does not support the video tag. I suggest you upgrade your browser.
+                  <source src="Crossroad.webm" type="video/webm" />Your browser does not support the video tag. I suggest you upgrade your browser.
+              </video>
+            <div class="text-overlay">
+              <h1 class="abril">RIDeOn</h1>
+              <h3 class="abril"> A QUICKER WAY TO GET WHERE YOU ARE GOING</h3>
 
-    <div class="grid-container">
-      <div class="grid-item header">
-            <h1> RideON</h1>
-            <h2> A simple and easy way to get where you are going. </h2>
-      </div>
-
-      <div class=" images">
-         <img class="images " src="mountaincar2.jpg">
-          <img class="images" src="beachcar.jpg">
-          <img  class="images " src="desertcar.jpg">
-
-
-
-      </div>
-
-      <div class="content">
-
-      <a class="signOnButton" href="https://login.uber.com/oauth/v2/authorize?client_id=6RKJrLdnQfwsdkLRWzkJDVDuFy1RERuy&response_type=code&scope=profile"><button> Click To Sign On</button></a>
-      <h2>Easy 123</h2>
-      <div class="uberProducts"></div>
-      </div>
+              <a class="signOnButton" href="https://login.uber.com/oauth/v2/authorize?client_id=6RKJrLdnQfwsdkLRWzkJDVDuFy1RERuy&response_type=code&scope=profile&redirect_uri=http://localhost:8080/"><button> Click To Sign On</button></a>
 
 
-      <div class="footer">
-        <img class="circleImages " src="coordinates.jpeg">
-          <img class="circleImages" src="phone.png">
-          <img  class="circleImages " src="arrived.png">
+
+
+
+              <div id="button"><a href="estimates.html">Get Started</a></div>
+
+            </div>
+            <div class="poster hidden">
+                <img src="PATH_TO_JPEG" alt="crossroads">
+            </div>
         </div>
-
-        <div class="zipcode">
-          <form action='#' class="jsZipSearch">
-            <label for="query"></label>
-            <input type="text" class="js-search">
-            <button id="submit" type="submit">SEARCH BY ZIPCODE</button>
-          </form>
-        </div>
-
-
-
-
     </div>
 
+
+
+
+
+
+
+
+
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAexKQVBMP39SiZYE9pq_hvNvnUKYG-jMU&libraries=places"></script>
     <script src="main.js"></script>
   </main>
 </body>
