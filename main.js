@@ -4,7 +4,7 @@ const UBER_SERVER_TOKEN = "SV-Rt3mhdPpAmXnf-cvZKLJmzmzxsPObY9MU2FUi";
 const clientID = "6RKJrLdnQfwsdkLRWzkJDVDuFy1RERuy";
 const clientSecret= "751iZ4YDzNltjEPsZ8a4f7kXS9RLf8pVkgCyV_GE";
 const UBER_URL = "https://api.uber.com/V1.2";
-const redirectURI="http://localhost:8080/";
+const redirectURI="https://ryanwelch1.github.io/rideOn/";
 
 const UBER_Price_Estimates="https://api.uber.com/V1.2/estimates/price";
 const UBER_Time_Estimates="https://api.uber.com/V1.2/estimates/time";
