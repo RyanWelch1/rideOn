@@ -1,11 +1,9 @@
-
-
 const UBER_SERVER_TOKEN = "SV-Rt3mhdPpAmXnf-cvZKLJmzmzxsPObY9MU2FUi";
 const clientID = "6RKJrLdnQfwsdkLRWzkJDVDuFy1RERuy";
 const clientSecret= "751iZ4YDzNltjEPsZ8a4f7kXS9RLf8pVkgCyV_GE";
 const UBER_URL = "https://api.uber.com/V1.2";
-const redirectURI="https://ryanwelch1.github.io/rideOn/";
-
+// const redirectURI="https://ryanwelch1.github.io/rideOn/";
+const redirectURI = "http://localhost:8080/"
 const UBER_Price_Estimates="https://api.uber.com/V1.2/estimates/price";
 const UBER_Time_Estimates="https://api.uber.com/V1.2/estimates/time";
 const UBER_Get_Ride_Details="https://api.uber.com/V1.2/requests/{request_id}";
@@ -33,14 +31,28 @@ function getUrlParameter(name) {
     const regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
     const code = regex.exec(location.search);
     code === null ? '' : decodeURIComponent(code[1].replace(/\+/g, ' '));
-    tradeForAccessToken(code[1]);
+    if(code) {
+      tradeForAccessToken(code[1]);
+    }
 };
 // run getUrlParameter taking code as the argument
-getUrlParameter("code");
+if(window.location.href !== "http://localhost:8080/") {
+  getUrlParameter("code");
+}
 
 // trading code for Access token
 function tradeForAccessToken(code) {
-  const url=`http://crossorigin.me/https://login.uber.com/oauth/v2/token?code=${code}&client_id=${clientID}&client_secret=${clientSecret}&grant_type=authorization_code&redirect_uri=${redirectURI}`
+  console.log(code);
+  const url=`https://login.uber.com/oauth/v2/token?code=${code}&client_id=${clientID}&client_secret=${clientSecret}&grant_type=authorization_code&redirect_uri=${redirectURI}`
+
+  //  fetch(url, { 
+  //   method: 'POST',
+  //   mode: 'no-cors',
+  //   headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
+  // })
+  // .then(response => response.json())
+  // .then(json => console.log(json))
+  // .catch(error => console.log(error))
     $.ajax({
        url,
        method: "POST",// method post because 405 error not wanting to see GET request as method.
@@ -53,6 +65,7 @@ function tradeForAccessToken(code) {
          console.log(response);
          accessToken = response.access_token;
          requestsApi(accessToken);
+         console.log(accessToken);
 
 
 
@@ -117,6 +130,7 @@ function getEstimateFromUber(accessToken, latitude, longitude) {
 function getGeocode() {
   $(".jsZipSearch").on("submit", function(event) {
     event.preventDefault();
+    console.log('d');
     let startingDestination= $(".startAddInput").val();
     let endDestination= $(".endAddInput").val();
     covertStartingAddressToLongLat(startingDestination);
@@ -169,6 +183,7 @@ function covertEndAddressToLongLat(address){
 
 
 
+//Video-jQuery is required to run this code
 $( document ).ready(function() {
 
     scaleVideoContainer();
@@ -231,7 +246,6 @@ function scaleBannerVideoSize(element){
 
     });
 }
-
 // function displayResults(zipcode) {
 //   data.
 // }

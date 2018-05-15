@@ -1,3 +1,5 @@
+
+
 .signOntoUber {
   margin-bottom: 300px;
   font-size: 48px;
@@ -22,7 +24,22 @@ a:hover {
     color: black;
     background: white;
 }
+.text-overlay {
+   color: white;
+    position:relative;
+    text-align: center;
 
+}
+
+.overlay {
+margin-left: auto;
+margin-right: auto;
+}
+
+
+h1 {
+  font-size: 78px;
+}
 /* video */
 
 .homepage-hero-module {
@@ -46,6 +63,7 @@ a:hover {
     width: 100%;
     overflow: hidden;
     background: #000;
+
 }
 .video-container .poster img {
     width: 100%;
@@ -65,22 +83,4 @@ a:hover {
 }
 .video-container video.fillWidth {
     width: 100%;
-}
-
-.text-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index:1;
-    color: white;
-    font-size: 2em;
-    text-align: center;
-    width: 100%;
-}
-
-
-
-/* font style */
-.abril {
-font-family: 'Abril Fatface', cursive;
 }
